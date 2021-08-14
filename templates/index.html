@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Receptek - Főoldal</title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}" >
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <header>
+        <h1 id="cim">Receptek</h1>
+        <p id="alcim">egy helyen</p>
+    </header>
+
+    <hr>
+
+    <!--Oldalsáv-->
+    <div class="w3-sidebar" style="width: 25%; background-color: aquamarine; text-align: center;">
+        <h3>Kereső</h3>
+        <input type="text" id="kereso" name="kereso">
+        <input type="submit" value="Keresés">
+        <p>további felsorolás</p>
+
+    </div>
+
+    <!--Tartalom-->
+    <div style="margin-left: 25%">
+        <div>
+            <p>tartalom</p>
+        </div>
+    </div>
+</body>
+
+</html>
