@@ -8,28 +8,75 @@
 </head>
 
 <body>
-    <header>
-        <h1 id="cim">Receptek</h1>
-        <p id="alcim">egy helyen</p>
-    </header>
-
-    <hr>
+    
 
     <!--Oldalsáv-->
-    <div class="w3-sidebar" style="width: 25%; background-color: aquamarine; text-align: center;">
+    
+	<div class="sidenav">
+		<div style="text-align: center;">
+		  <input type="text" id="kereso" name="kereso">
+          <input id="keresogomb" type="submit" value="Keresés">
+		</div>
+		<a href="#about">About</a>
+		<a href="#services">Services</a>
+		<a href="#clients">Clients</a>
+		<a href="#contact">Contact</a>
+		<button class="dropdown-btn">Dropdown
+		  <i class="fa fa-caret-down"></i>
+		</button>
+		<div class="dropdown-container">
+		  <a href="#">Link 1</a>
+		  <a href="#">Link 2</a>
+		  <a href="#">Link 3</a>
+		</div>
+        <button class="dropdown-btn">Dropdown 2
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-container">
+            <a href="#">Link 4</a>
+            <a href="#">Link 5</a>
+            <a href="#">Link 6</a>
+          </div>
+        <p style="text-align: center; margin-bottom: 50%;">A keresőnek itt vége</p>
+	  </div>
+
+	<!--<div class="w3-sidebar" style="width: 25%; background-color: aquamarine; text-align: center;">
         <h3>Kereső</h3>
         <input type="text" id="kereso" name="kereso">
         <input type="submit" value="Keresés">
         <p>további felsorolás</p>
 
-    </div>
+    </div>-->
+
+	<header>
+        <h1 id="cim">Receptek</h1>
+        <p id="alcim">egy helyen</p>
+    </header>
 
     <!--Tartalom-->
-    <div style="margin-left: 25%">
+    <div style="margin-left: 20%; height: 100vmax ; background-color: white;">
         <div>
             <p>tartalom</p>
         </div>
     </div>
+	<script>
+		//* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+		var dropdown = document.getElementsByClassName("dropdown-btn");
+		var i;
+
+		for (i = 0; i < dropdown.length; i++) {
+		dropdown[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var dropdownContent = this.nextElementSibling;
+			if (dropdownContent.style.display === "block") {
+			dropdownContent.style.display = "none";
+			} else {
+			dropdownContent.style.display = "block";
+			}
+		});
+		}
+
+	</script>
 </body>
 
 </html>
