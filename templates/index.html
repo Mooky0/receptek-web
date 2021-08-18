@@ -13,31 +13,22 @@
     <!--Oldalsáv-->
     
 	<div class="sidenav">
+		<h2>Kereső</h2>
 		<div style="text-align: center;">
 		  <input type="text" id="kereso" name="kereso">
           <input id="keresogomb" type="submit" value="Keresés">
 		</div>
-		<a href="#about">About</a>
-		<a href="#services">Services</a>
-		<a href="#clients">Clients</a>
-		<a href="#contact">Contact</a>
-		<button class="dropdown-btn">Dropdown
+		{% for i in range(lentomb) %}
+		<button class="dropdown-btn">{{tomb[i][0]}}
 		  <i class="fa fa-caret-down"></i>
 		</button>
 		<div class="dropdown-container">
-		  <a href="#">Link 1</a>
-		  <a href="#">Link 2</a>
-		  <a href="#">Link 3</a>
+			{%for j in range(tomb[i][1]) %}
+				<a href="#">{{tomb[i][2][j]}}</a>
+			{%endfor%}
 		</div>
-        <button class="dropdown-btn">Dropdown 2
-            <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-container">
-            <a href="#">Link 4</a>
-            <a href="#">Link 5</a>
-            <a href="#">Link 6</a>
-          </div>
-        <p style="text-align: center; margin-bottom: 50%;">A keresőnek itt vége</p>
+		{%endfor%}
+        <p style="text-align: center; margin-bottom: 20px">A keresőnek itt vége</p>
 	  </div>
 
 	<!--<div class="w3-sidebar" style="width: 25%; background-color: aquamarine; text-align: center;">
