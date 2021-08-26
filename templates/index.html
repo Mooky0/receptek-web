@@ -14,10 +14,10 @@
     
 	<div class="sidenav">
 		<h2>Kereső</h2>
-		<div style="text-align: center;">
+		<form style="text-align: center;" action="http://localhost:5000/kereso/" method="POST">
 		  <input type="text" id="kereso" name="kereso">
-          <input id="keresogomb" type="submit" value="Keresés">
-		</div>
+          <input id="keresogomb" type="submit" name="keresogomb value="Keresés">
+		</form>
 		{% for i in range(lentomb) %}
 		<button class="dropdown-btn">{{tomb[i][0]}}
 		  <i class="fa fa-caret-down"></i>
