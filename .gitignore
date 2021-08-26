@@ -138,3 +138,6 @@ __pycache__/
 
 biztonsagi_mentes.zip
 test.py
+/templates/*.db
+
+/mentes/
