@@ -76,4 +76,11 @@ def init_lista():
     szurok[4].append(forrasKi)
     
     #print(szurok)
+    connect_close()
     return szurok
+
+def kereso(kereses):
+    connect()
+    c.execute("""SELECT * FROM receptek WHERE nev LIKE ?""",  (('%' + kereses + '%'),))
+    keresett = c.fetchall()
+    return keresett

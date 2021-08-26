@@ -23,7 +23,8 @@ def index_post():
 def kereses(keres):
    tomb = dbhandler.init_lista()
    lentomb=len(tomb)
-   return render_template('index.html', tomb=tomb, lentomb=lentomb, tartalom = keres)
+   keresett = dbhandler.kereso(keres)
+   return render_template('index.html', tomb=tomb, lentomb=lentomb, tartalom = keresett)
    ## return 'A keresett érték: %s' % keres
 
 if __name__ == '__main__':
