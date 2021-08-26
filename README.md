@@ -20,25 +20,37 @@ Ez nem kötelező, de a tisztaság érdekében ajánlott.
 > python3 -m venv cenv
 ```
 
-Ha `cmd`-t használsz:
+Ha `cmd` -t használsz:
 ```shell
-> .\venv\Scripts\activate.bat
+> ./venv/Scripts/activate.bat
 ```
 
-Ha `PS`-t használsz:
+Ha `PS` -t használsz:
 ```shell
-> .\venv\Scripts\Activate.ps1
+> ./venv/Scripts/Activate.ps1
 ```
 
 A virtuális környezetet kikapcsolni mindkét esetben a `deactivate` paraccsal tudod.
 
 ## Használat
 
-Aktiváld ha `venv`-et ha még nem tetted.
+Aktiváld ha `venv` -et ha még nem tetted.
 
 A kiekészítések telepítése
 ```shell
 > pip install -r requirements.txt
 ```
+
+### Futtatás
+```shell
+> ./venv/Scripts/python.exe ./app.py
+```
+
+És a `localhost:5000` -en fog futni az oldal, bármely böngészőből elérhető az oldal.
+Teszt fázisban csakk a gépen amin fut.
+
+Leállítani a <kbd>Ctrl</kbd> + <kbd>C</kbd> billentyűkombinációval tudod.
+
+------
 
 Contact: tothgabor2003@gmail.com
