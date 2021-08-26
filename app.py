@@ -21,7 +21,10 @@ def index_post():
 
 @app.route('/kereses/<keres>')
 def kereses(keres):
-   return 'A keresett érték: %s' % keres
+   tomb = dbhandler.init_lista()
+   lentomb=len(tomb)
+   return render_template('index.html', tomb=tomb, lentomb=lentomb, tartalom = keres)
+   ## return 'A keresett érték: %s' % keres
 
 if __name__ == '__main__':
    app.run()
