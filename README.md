@@ -17,7 +17,7 @@ Ha minden igaz, akkor ide nem kell jönnie, csak azoknak akik fejlesztik, ez a l
 Ez nem kötelező, de a tisztaság érdekében ajánlott.
 
 ```shell
-> python3 -m venv cenv
+> python3 -m venv venv
 ```
 
 Ha `cmd` -t használsz:
@@ -41,12 +41,18 @@ A kiekészítések telepítése
 > pip install -r requirements.txt
 ```
 
-### Futtatás
+### Futtatás venv-el
 ```shell
 > ./venv/Scripts/python.exe ./app.py
 ```
 
-És a `localhost:5000` -en fog futni az oldal, bármely böngészőből elérhető az oldal.
+### Futtatás venv nélkül
+```shell
+> python ./app.py
+```
+vagy az `app.py` file futtatása.
+
+És a `localhost:5000/index` -en fog futni az oldal, bármely böngészőből elérhető az oldal.
 Teszt fázisban csakk a gépen amin fut.
 
 Leállítani a <kbd>Ctrl</kbd> + <kbd>C</kbd> billentyűkombinációval tudod.
