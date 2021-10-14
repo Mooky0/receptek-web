@@ -141,3 +141,6 @@ test.py
 /templates/*.db
 
 /mentes/
+.mentes
+mentes/
+./mentes/
