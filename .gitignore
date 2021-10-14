@@ -140,4 +140,4 @@ biztonsagi_mentes.zip
 test.py
 /templates/*.db
 
-/mentes/
+mentes/
