@@ -140,5 +140,6 @@ biztonsagi_mentes.zip
 test.py
 /templates/*.db
 receptek.db
+*.db
 
 mentes/
