@@ -15,8 +15,8 @@
 	<div class="sidenav">
 		<h2>Kereső</h2>
 		<form style="text-align: center;" action="http://localhost:5000/kereso/" method="POST">
-		  <input type="text" id="kereso" name="kereso">
-          <input id="keresogomb" type="submit" name="keresogomb value="Keresés">
+		  <input type="text" id="kereso" name="kereso", value="{{szo}}">
+          <input id="keresogomb" type="submit" name="keresogomb" value="Keresés">
 		</form>
 		{% for i in range(lentomb) %}
 		<button class="dropdown-btn">{{tomb[i][0]}}
@@ -40,16 +40,40 @@
     </div>-->
 
 	<header>
-        <h1 id="cim">Receptek</h1>
+        <h1 id="cim"><a href="/index">Receptek</a></h1>
         <p id="alcim">egy helyen</p>
     </header>
 
     <!--Tartalom-->
-    <div style="margin-left: 20%; height: 100vmax ; background-color: white;">
+    <div style="margin-left: 20%; height: 100%; background-color: white;">
+		{% if lentartalom == 0 %}
         <div>
-            <p>{{tartalom}}</p>
+            <p>Nincs keresés/találat.</p>
         </div>
+		{% else %}
+		<div style="padding: 15px;">
+            {% for i in range(lentartalom) %}
+
+			<h4 style="color: blue;"><a href="/recept/{{tartalom[i][0]}}" >{{tartalom[i][1]}}</a></h4> 
+			
+			{% autoescape false %}
+			{% if tartalom[i][7] == 1%}
+			<p style="padding: 0%; margin: 0%;">{{tartalom[i][2]}}</p>
+			<p style="padding: 0%; margin: 0%; color: grey;">Honnan van: {{tartalom[i][6]}} &emsp; | &emsp; Bevált: &#9989;</p>
+			{% else %}
+			<p style="padding: 0%; margin: 0%;">{{tartalom[i][2]}}</p>
+			<p style="padding: 0%; margin: 0%; color: grey;">Honnan van: {{tartalom[i][6]}} &emsp; | &emsp; Bevált: &#10062;</p>
+			{% endif %}
+			{% endautoescape %}
+			<hr style="height:2px;border-width:0;color:gray;background-color:gray">
+
+			{%endfor%}
+        </div>
+		{% endif %}
     </div>
+
+
+
 	<script>
 		//* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
 		var dropdown = document.getElementsByClassName("dropdown-btn");

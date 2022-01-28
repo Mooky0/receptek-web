@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Receptek - Főoldal</title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}" >
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+</head>
+
+<body>
+
+    <!--Oldalsáv-->
+    
+	<div class="sidenav">
+		<h2>Kereső</h2>
+		<form style="text-align: center;" action="http://localhost:5000/kereso/" method="POST">
+		  <input type="text" id="kereso" name="kereso", value="{{szo}}">
+          <input id="keresogomb" type="submit" name="keresogomb" value="Keresés">
+		</form>
+		{% for i in range(lentomb) %}
+		<button class="dropdown-btn">{{tomb[i][0]}}
+		  <i class="fa fa-caret-down"></i>
+		</button>
+		<div class="dropdown-container">
+			{%for j in range(tomb[i][1]) %}
+				<a href="#">{{tomb[i][2][j]}}</a>
+			{%endfor%}
+		</div>
+		{%endfor%}
+        <p style="text-align: center; margin-bottom: 20px">A keresőnek itt vége</p>
+	  </div>
+
+	<!--<div class="w3-sidebar" style="width: 25%; background-color: aquamarine; text-align: center;">
+        <h3>Kereső</h3>
+        <input type="text" id="kereso" name="kereso">
+        <input type="submit" value="Keresés">
+        <p>további felsorolás</p>
+
+    </div>-->
+
+	<header>
+        <h1 id="cim"><a href="/index">Receptek</a></h1>
+        <p id="alcim">egy helyen</p>
+    </header>
+
+
+    <div style="padding: 15px; margin-left: 20%; height: 100vmax ; background-color: white;">
+		
+		<p style="padding: 0%; margin: 0%; font-size: xx-small; color: grey;">{{tartalom[0]}}</p>
+		<input type="button" value="Szerkesztés" style="float: right; height: 60px; align-content: center; margin-right: 60px;">
+        <h2 style="padding: 0%; margin: 0%;  color: blue;">{{tartalom[1]}}</h2>
+		{% if tartalom[7] == 1%}
+		<p style="padding: 0%; margin: 0%; color: grey;">Származás: {{tartalom[6]}} &emsp; | &emsp; Adag: {{tartalom[4]}} &emsp; | &emsp; Bevált: &#9989;</p>
+		{% else %}
+		<p style="padding: 0%; margin: 0%; color: grey;">Származás: {{tartalom[6]}} &emsp; | &emsp; Adag: {{tartalom[4]}} &emsp; | &emsp; Bevált: &#10062;</p>
+		{% endif %}
+		<hr style="height:2px;border-width:0;color:gray;background-color:gray">
+		
+		{% autoescape false %}
+		<p style="padding: 5px;">{{tartalom[2]}}</p>
+		{% endautoescape %}
+    
+    </div>
+    
+    
+    <script>
+		//* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+		var dropdown = document.getElementsByClassName("dropdown-btn");
+		var i;
+
+		for (i = 0; i < dropdown.length; i++) {
+		dropdown[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var dropdownContent = this.nextElementSibling;
+			if (dropdownContent.style.display === "block") {
+			dropdownContent.style.display = "none";
+			} else {
+			dropdownContent.style.display = "block";
+			}
+		});
+		}
+
+	</script>
+
+</body>
+
+</html>
