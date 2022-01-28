@@ -84,3 +84,9 @@ def kereso(kereses):
     c.execute("""SELECT * FROM receptek WHERE nev LIKE ?""",  (('%' + kereses + '%'),))
     keresett = c.fetchall()
     return keresett
+
+def receptById(id):
+    connect()
+    c.execute("""SELECT * FROM receptek WHERE id LIKE ?""", ((id),))
+    keresett = c.fetchone()
+    return keresett
