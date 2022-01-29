@@ -1,3 +1,4 @@
+import re
 from flask import Flask, render_template, request, redirect, url_for
 
 import dbhandler
@@ -36,8 +37,22 @@ def recept(id):
    kereses = dbhandler.receptById(id)
    if kereses == None:
       return render_template('404.html')
-   vegso = (kereses[0], kereses[1], kereses[2].replace('\n', ' <br> '), kereses[3], kereses[4], kereses[5], kereses[6], kereses[7], kereses[8])
+      
+   vegso = {}
+   vegso["adatok"] = [(kereses["adatok"][0][0], kereses["adatok"][0][1].replace('\n', ' <br> '), kereses["adatok"][0][2], kereses["adatok"][0][3], kereses["adatok"][0][4], kereses["adatok"][0][5], kereses["adatok"][0][6])]
+   vegso["len_adatok"] = kereses["len_adatok"]
+   vegso["osszetevok"] = kereses["osszetevok"]
+   vegso["len_osszetevok"] = kereses["len_osszetevok"]
+   vegso["alkalom"] = kereses["alkalom"]
+   vegso["len_alkalom"] = kereses["len_alkalom"]
+   vegso["tartalom"] = kereses["tartalom"]
+   vegso["len_tartalom"] = kereses["len_tartalom"]
    return render_template('recept.html', tomb=tomb, lentomb=lentomb, tartalom = vegso)
+
+
+@app.route('/tag/<tag>')
+def tag(tag):
+   return render_template('404.html')
 
 if __name__ == '__main__':
    app.run()
