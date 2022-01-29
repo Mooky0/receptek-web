@@ -48,17 +48,40 @@
 		
 		<p style="padding: 0%; margin: 0%; font-size: xx-small; color: grey;">{{tartalom[0]}}</p>
 		<input type="button" value="Szerkesztés" style="float: right; height: 60px; align-content: center; margin-right: 60px;">
-        <h2 style="padding: 0%; margin: 0%;  color: blue;">{{tartalom[1]}}</h2>
-		{% if tartalom[7] == 1%}
-		<p style="padding: 0%; margin: 0%; color: grey;">Származás: {{tartalom[6]}} &emsp; | &emsp; Adag: {{tartalom[4]}} &emsp; | &emsp; Bevált: &#9989;</p>
+        <h2 style="padding: 0%; margin: 0%;  color: blue;">{{tartalom["adatok"][0][0]}}</h2>
+		{% if tartalom["adatok"][0][4] == 1%}
+		<p style="padding: 0%; margin: 0%; color: grey;">Származás: {{tartalom["adatok"][0][3]}} &emsp; | &emsp; Elkészítési idő: {{tartalom["adatok"][0][2]}} &emsp; | &emsp; Adag: {{tartalom["adatok"][0][5]}} &emsp; | &emsp; Bevált: &#9989;</p>
 		{% else %}
-		<p style="padding: 0%; margin: 0%; color: grey;">Származás: {{tartalom[6]}} &emsp; | &emsp; Adag: {{tartalom[4]}} &emsp; | &emsp; Bevált: &#10062;</p>
+		<p style="padding: 0%; margin: 0%; color: grey;">Származás: {{tartalom["adatok"][0][3]}} &emsp; | &emsp; Elkészítési idő: {{tartalom["adatok"][0][2]}} &emsp; | &emsp; Adag: {{tartalom["adatok"][0][5]}} &emsp; | &emsp; Bevált: &#10062;</p>
 		{% endif %}
 		<hr style="height:2px;border-width:0;color:gray;background-color:gray">
 		
+		<h5>Tags:</h5>
+		{%for i in range(tartalom["len_alkalom"]) %}
+			<p style="display: inline;"><a href="/tag/{{tartalom['alkalom'][i][0]}}"> #{{tartalom["alkalom"][i][0]}}</a> </p> 
+		{%endfor%}
+		{%for i in range(tartalom["len_tartalom"]) %}
+			<p style="display: inline;"><a href="/tag/{{tartalom['tartalom'][i][0]}}"> #{{tartalom["tartalom"][i][0]}}</a> </p> 
+		{%endfor%}
+
+		<br>
+		<p>Összetevők: <br>
+		{%for i in range(tartalom["len_osszetevok"]) %}
+
+			{% if tartalom["osszetevok"][i][2] != '-' %}
+			- {{tartalom["osszetevok"][i][0]}}: {{tartalom["osszetevok"][i][1]}} {{tartalom["osszetevok"][i][2] }} <br>
+			{% else %}
+			- {{tartalom["osszetevok"][i][0]}}: {{tartalom["osszetevok"][i][1]}} <br>
+			{%endif%}
+
+		{%endfor%}
+		</p>
+
 		{% autoescape false %}
-		<p style="padding: 5px;">{{tartalom[2]}}</p>
+		<p style="padding: 5px;">Elkészítés: <br>{{tartalom["adatok"][0][1]}}</p>
 		{% endautoescape %}
+
+
     
     </div>
     

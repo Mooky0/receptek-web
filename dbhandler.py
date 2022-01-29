@@ -83,10 +83,48 @@ def kereso(kereses):
     connect()
     c.execute("""SELECT * FROM receptek WHERE nev LIKE ?""",  (('%' + kereses + '%'),))
     keresett = c.fetchall()
+    connect_close()
     return keresett
 
-def receptById(id):
+def receptById(recept_id):
     connect()
-    c.execute("""SELECT * FROM receptek WHERE id LIKE ?""", ((id),))
-    keresett = c.fetchone()
+    # c.execute("""SELECT * FROM receptek WHERE id LIKE ?""", ((id),))
+    # keresett = c.fetchone()
+    # connect()
+
+    recept_adatok_recept = []
+    recept_adatok_osszetevok =  []
+    recept_adatok_alkalom = []
+    recept_adatok_tartalom = []
+
+
+    c.execute("""SELECT nev, elkeszites, ido, forras, bevalt, adag, adag_me FROM receptek WHERE id={}""".format(recept_id))
+    recept_adatok_recept = c.fetchall()  # pl: [('Példa recept', 'leírás', 20, forras, 0)]
+    # print(recept_adatok_recept)
+    c.execute("""SELECT megnevezes, mennyiseg, mertekegyseg FROM osszetevok WHERE id={}""".format(recept_id))
+    recept_adatok_osszetevok = c.fetchall()  # pl: [('Tojás', 3.0, 'db'), ('Káposzta', 'fél', 'fej'), ('Liszt', 1.0, 'bögre')]
+    # print(recept_adatok_osszetevok)
+
+    c.execute("""SELECT alkalom FROM alkalom WHERE id={}""".format(recept_id))
+    recept_adatok_alkalom = c.fetchall()  # pl: [('egyik',), ('masik',), ('harmadik',)]
+
+    c.execute("""SELECT tartalom FROM tartalom WHERE id={}""".format(recept_id))
+    recept_adatok_tartalom = c.fetchall()  # pl: [('Egyéb zöldségek',), ('Egyéb gyümölcsök',), ('Bogyós gyümölcsök',)]
+
+    connect_close()
+    if recept_adatok_recept == [] or recept_adatok_recept == None:
+        return None
+    
+    keresett = {
+        "adatok": recept_adatok_recept,
+        "len_adatok": len(recept_adatok_recept),
+        "osszetevok": recept_adatok_osszetevok,
+        "len_osszetevok": len(recept_adatok_osszetevok),
+        "alkalom": recept_adatok_alkalom,
+        "len_alkalom": len(recept_adatok_alkalom),
+        "tartalom": recept_adatok_tartalom,
+        "len_tartalom": len(recept_adatok_tartalom)
+    }
+    print(keresett)
+
     return keresett
