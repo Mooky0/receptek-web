@@ -4,29 +4,33 @@
 <title>Receptek - Főoldal</title>
 <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}" >
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
+    
 
     <!--Oldalsáv-->
     
 	<div class="sidenav">
-		<h2>Kereső</h2>
+		<h2>Recept kereső</h2>
 		<form style="text-align: center;" action="/kereso/" method="POST">
 		  <input type="text" id="kereso" class="kereso" name="kereso", value="{{szo}}">
           <input id="keresogomb" type="submit" name="keresogomb" value="Keresés">
 		</form>
+		<div id="taglist">
+		<input type="text" id="tagkereso" class="kereso" name="tagkereso" onkeyup="filterFunction()">
 		{% for i in range(lentomb) %}
 		<button class="dropdown-btn">{{tomb[i][0]}}
 		  <i class="fa fa-caret-down"></i>
 		</button>
 		<div class="dropdown-container">
 			{%for j in range(tomb[i][1]) %}
-				<a href="/tag/s/{{tomb[i][2][j]}}/1">{{tomb[i][2][j]}}</a>
+				<a href="/tag/{{tags}}/{{tomb[i][2][j]}}/1">{{tomb[i][2][j]}}</a>
 			{%endfor%}
 		</div>
 		{%endfor%}
+		</div>
         <p style="text-align: center; margin-bottom: 20px">A keresőnek itt vége</p>
 	  </div>
 
@@ -43,49 +47,33 @@
         <p id="alcim">egy helyen</p>
     </header>
 
-
     <div style="padding: 15px; margin-left: 20%; height: 100% ; background-color: white;">
-		
-		<p style="padding: 0%; margin: 0%; font-size: xx-small; color: grey;">{{tartalom[0]}}</p>
-		<input type="button" value="Szerkesztés" style="float: right; height: 60px; align-content: center; margin-right: 60px;">
-        <h2 style="padding: 0%; margin: 0%;  color: blue;">{{tartalom["adatok"][0][1]}}</h2>
-		{% if tartalom["adatok"][0][5] == 1%}
-		<p style="padding: 0%; margin: 0%; color: grey;">Származás: {{tartalom["adatok"][0][5]}} &emsp; | &emsp; Elkészítési idő: {{tartalom["adatok"][0][4]}} perc &emsp; | &emsp; {{tartalom["adatok"][0][6]}} adag &emsp; | &emsp; Bevált: &#9989;</p>
-		{% else %}
-		<p style="padding: 0%; margin: 0%; color: grey;">Származás: {{tartalom["adatok"][0][5]}} &emsp; | &emsp; Elkészítési idő: {{tartalom["adatok"][0][4]}} perc &emsp; | &emsp; {{tartalom["adatok"][0][6]}} adag &emsp; | &emsp; Bevált: &#10062;</p>
-		{% endif %}
-		<hr style="height:2px;border-width:0;color:gray;background-color:gray">
-		
-		<h5>Tags:</h5>
-		{%for i in range(tartalom["len_alkalom"]) %}
-			<p style="display: inline;"><a href="/tag/s/{{tartalom['alkalom'][i][0]}}/1"> #{{tartalom["alkalom"][i][0]}}</a> </p> 
-		{%endfor%}
-		{%for i in range(tartalom["len_tartalom"]) %}
-			<p style="display: inline;"><a href="/tag/s/{{tartalom['tartalom'][i][0]}}/1"> #{{tartalom["tartalom"][i][0]}}</a> </p> 
-		{%endfor%}
-
-		<br>
-		<p>Összetevők: <br>
-		{%for i in range(tartalom["len_osszetevok"]) %}
-
-			{% if tartalom["osszetevok"][i][2] != '-' %}
-			- {{tartalom["osszetevok"][i][0]}}: {{tartalom["osszetevok"][i][1]}} {{tartalom["osszetevok"][i][2] }} <br>
-			{% else %}
-			- {{tartalom["osszetevok"][i][0]}}: {{tartalom["osszetevok"][i][1]}} <br>
-			{%endif%}
-
+		<h3>A keresett tag-ok:</h3>
+		<p>
+		{% for i in range(lentags) %}
+		#{{tags[i]}} <a href="/tag/{{tags}}/{{tags[i]}}/0">x</a> &ensp;
 		{%endfor%}
 		</p>
+        {% for i in range(lenlista) %}
 
-		{% autoescape false %}
-		<p style="padding: 5px;">Elkészítés: <br>{{tartalom["adatok"][0][2]}}</p>
-		{% endautoescape %}
+        <h4 style="color: blue;"><a href="/recept/{{lista[i]['adatok'][0][0]}}">{{lista[i]["adatok"][0][1]}}</a></h4>
 
 
-    
+        {% autoescape false %}
+			{% if lista[i]["adatok"][0][5] == 1%}
+			<p style="padding: 0%; margin: 0%;">{{lista[i]["adatok"][0][2]}}</p>
+			<p style="padding: 0%; margin: 0%; color: grey;">Honnan van: {{lista[i]["adatok"][0][4]}} &emsp; | &emsp; Bevált: &#9989;</p>
+			{% else %}
+			<p style="padding: 0%; margin: 0%;">{{lista[i]["adatok"][0][2]}}</p>
+			<p style="padding: 0%; margin: 0%; color: grey;">Honnan van: {{lista[i]["adatok"][0][4]}} &emsp; | &emsp; Bevált: &#10062;</p>
+			{% endif %}
+			{% endautoescape %}
+			<hr style="height:2px;border-width:0;color:gray;background-color:gray">
+
+        {%endfor%}
     </div>
-    
-    
+
+
     <script>
 		//* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
 		var dropdown = document.getElementsByClassName("dropdown-btn");
@@ -102,9 +90,25 @@
 			}
 		});
 		}
+		
+		//* A dropdownban keres
+		function filterFunction() {
+			var input, filter, ul, li, a, i;
+			input = document.getElementById("tagkereso");
+			filter = input.value.toUpperCase();
+			div = document.getElementById("taglist");
+			a = div.getElementsByTagName("a");
+			for (i = 0; i < a.length; i++) {
+				txtValue = a[i].textContent || a[i].innerText;
+				if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				a[i].style.display = "";
+				} else {
+				a[i].style.display = "none";
+				}
+			}
+		}
 
 	</script>
-
 </body>
 
 </html>

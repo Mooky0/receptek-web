@@ -13,9 +13,9 @@
     <!--Oldalsáv-->
     
 	<div class="sidenav">
-		<h2>Kereső</h2>
-		<form style="text-align: center;" action="http://localhost:5000/kereso/" method="POST">
-		  <input type="text" id="kereso" name="kereso", value="{{szo}}">
+		<h2>Recept kereső</h2>
+		<form style="text-align: center;" action="/kereso/" method="POST">
+		  <input type="text" id="kereso" class="kereso" name="kereso" value="{{szo}}">
           <input id="keresogomb" type="submit" name="keresogomb" value="Keresés">
 		</form>
 		{% for i in range(lentomb) %}
@@ -24,10 +24,11 @@
 		</button>
 		<div class="dropdown-container">
 			{%for j in range(tomb[i][1]) %}
-				<a href="#">{{tomb[i][2][j]}}</a>
+				<a href="/tag/{{tomb[i][2][j]}}">{{tomb[i][2][j]}}</a>
 			{%endfor%}
 		</div>
 		{%endfor%}
+		
         <p style="text-align: center; margin-bottom: 20px">A keresőnek itt vége</p>
 	  </div>
 
@@ -90,6 +91,8 @@
 			}
 		});
 		}
+
+		
 
 	</script>
 </body>

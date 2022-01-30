@@ -26,7 +26,7 @@ header{
 }
 */
 
-#kereso{
+.kereso{
 	padding: 6px;
 	margin-bottom: 10px;
 	text-align: left;
@@ -34,6 +34,7 @@ header{
 	border-radius: 5mm;
 	border-color: black;
 	width: 90%;
+	text-align: center;
 }
 
 #keresogomb{
