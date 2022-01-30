@@ -39,7 +39,7 @@ def recept(id):
       return render_template('404.html')
       
    vegso = {}
-   vegso["adatok"] = [(kereses["adatok"][0][0], kereses["adatok"][0][1].replace('\n', ' <br> '), kereses["adatok"][0][2], kereses["adatok"][0][3], kereses["adatok"][0][4], kereses["adatok"][0][5], kereses["adatok"][0][6])]
+   vegso["adatok"] = [(kereses["adatok"][0][0], kereses["adatok"][0][1], kereses["adatok"][0][2].replace('\n', ' <br> '), kereses["adatok"][0][2], kereses["adatok"][0][3], kereses["adatok"][0][4], kereses["adatok"][0][5], kereses["adatok"][0][6])]
    vegso["len_adatok"] = kereses["len_adatok"]
    vegso["osszetevok"] = kereses["osszetevok"]
    vegso["len_osszetevok"] = kereses["len_osszetevok"]
@@ -52,8 +52,17 @@ def recept(id):
 
 @app.route('/tag/<tag>')
 def tag(tag):
-   return render_template('404.html')
+   tomb = dbhandler.init_lista()
+   lentomb=len(tomb)
+   szurt = dbhandler.szures(tag)
+   if szurt == []:
+      return render_template('404.html')
+   lista = dbhandler.lista(szurt)
+   # print(lista)
+   return render_template('tag.html', tomb=tomb, lentomb=lentomb, lista = lista, lenlista = len(lista))
+
+
 
 if __name__ == '__main__':
-   app.run()
+   app.run(debug=True)
 
