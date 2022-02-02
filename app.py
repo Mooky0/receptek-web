@@ -1,9 +1,10 @@
-import re
 from flask import Flask, render_template, request, redirect, url_for
+import ast
 
 import dbhandler
 
 app = Flask(__name__)
+
 
 @app.route('/index/')
 def index():
@@ -50,19 +51,41 @@ def recept(id):
    return render_template('recept.html', tomb=tomb, lentomb=lentomb, tartalom = vegso)
 
 
-@app.route('/tag/<tag>')
-def tag(tag):
+@app.route('/tag/<tags>/<tag>/<add>')
+def tag(tags, tag, add):
+   """Az add az egy flag, ha True akkor hozzáadjuk az uj tag-et, ha False elvesszük a listából"""
+   add = int(add)
+   
+   print("{}: {}".format(type(tags), tags))
+   if tags == 's':
+      tags = []
+   else:
+      tags = ast.literal_eval(tags)
+
+   print("{}: {}".format(type(tags), tags))
+   if add == 1:
+      if tag not in tags:
+         print("yapp")
+         tags.append(tag)
+   elif add == 0:
+      if tag in tags:
+         print("nope")
+         tags.remove(tag)
+
+   print("{}: {}".format(type(tags), tags))
+
    tomb = dbhandler.init_lista()
    lentomb=len(tomb)
-   szurt = dbhandler.szures(tag)
-   if szurt == []:
+   szurt = dbhandler.szures(tags)
+   if szurt == [] or szurt == None:
       return render_template('404.html')
    lista = dbhandler.lista(szurt)
    # print(lista)
-   return render_template('tag.html', tomb=tomb, lentomb=lentomb, lista = lista, lenlista = len(lista))
+   print(tags)
+   return render_template('tag.html', tomb=tomb, lentomb=lentomb, lista = lista, lenlista = len(lista), tags=tags, lentags = len(tags))
 
 
 
 if __name__ == '__main__':
-   app.run(debug=True)
+   app.run(debug=True, host="0.0.0.0")
 

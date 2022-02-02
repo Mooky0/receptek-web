@@ -173,10 +173,10 @@ def receptById_csakNevek(recept_id):
 
     return keresett
 
-def szures(tag):
+def szures(tags):
     """A teg-ekből leszűri az adatbázist."""
 
-    if tag == "":
+    if tags == []:
         return None
 
     connect()
@@ -193,11 +193,12 @@ def szures(tag):
 
     leszurt = []
     # Egyesével végigmegyünk
-    for i in bevalt_tomb:
-        recept = receptById_csakNevek(i)
-        # print(recept["osszetevok"])
-        if tag in recept["osszetevok"] or tag in recept["alkalom"] or tag in recept["tartalom"] or tag in recept["forras"]:
-            leszurt.append(i)
+    for tag in tags:
+        for i in bevalt_tomb:
+            recept = receptById_csakNevek(i)
+            # print(recept["osszetevok"])
+            if tag in recept["osszetevok"] or tag in recept["alkalom"] or tag in recept["tartalom"] or tag in recept["forras"]:
+                [leszurt.append(i) if i not in leszurt else leszurt]
 
     return leszurt
 

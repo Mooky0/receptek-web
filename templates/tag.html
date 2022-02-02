@@ -13,21 +13,24 @@
     <!--Oldalsáv-->
     
 	<div class="sidenav">
-		<h2>Kereső</h2>
-		<form style="text-align: center;" action="http://localhost:5000/kereso/" method="POST">
-		  <input type="text" id="kereso" name="kereso", value="{{szo}}">
+		<h2>Recept kereső</h2>
+		<form style="text-align: center;" action="/kereso/" method="POST">
+		  <input type="text" id="kereso" class="kereso" name="kereso", value="{{szo}}">
           <input id="keresogomb" type="submit" name="keresogomb" value="Keresés">
 		</form>
+		<div id="taglist">
+		<input type="text" id="tagkereso" class="kereso" name="tagkereso" onkeyup="filterFunction()">
 		{% for i in range(lentomb) %}
 		<button class="dropdown-btn">{{tomb[i][0]}}
 		  <i class="fa fa-caret-down"></i>
 		</button>
 		<div class="dropdown-container">
 			{%for j in range(tomb[i][1]) %}
-				<a href="/tag/{{tomb[i][2][j]}}">{{tomb[i][2][j]}}</a>
+				<a href="/tag/{{tags}}/{{tomb[i][2][j]}}/1">{{tomb[i][2][j]}}</a>
 			{%endfor%}
 		</div>
 		{%endfor%}
+		</div>
         <p style="text-align: center; margin-bottom: 20px">A keresőnek itt vége</p>
 	  </div>
 
@@ -44,7 +47,13 @@
         <p id="alcim">egy helyen</p>
     </header>
 
-    <div style="padding: 15px; margin-left: 20%; height: 100vmax ; background-color: white;">
+    <div style="padding: 15px; margin-left: 20%; height: 100% ; background-color: white;">
+		<h3>A keresett tag-ok:</h3>
+		<p>
+		{% for i in range(lentags) %}
+		#{{tags[i]}} <a href="/tag/{{tags}}/{{tags[i]}}/0">x</a> &ensp;
+		{%endfor%}
+		</p>
         {% for i in range(lenlista) %}
 
         <h4 style="color: blue;"><a href="/recept/{{lista[i]['adatok'][0][0]}}">{{lista[i]["adatok"][0][1]}}</a></h4>
@@ -80,6 +89,23 @@
 			dropdownContent.style.display = "block";
 			}
 		});
+		}
+		
+		//* A dropdownban keres
+		function filterFunction() {
+			var input, filter, ul, li, a, i;
+			input = document.getElementById("tagkereso");
+			filter = input.value.toUpperCase();
+			div = document.getElementById("taglist");
+			a = div.getElementsByTagName("a");
+			for (i = 0; i < a.length; i++) {
+				txtValue = a[i].textContent || a[i].innerText;
+				if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				a[i].style.display = "";
+				} else {
+				a[i].style.display = "none";
+				}
+			}
 		}
 
 	</script>
